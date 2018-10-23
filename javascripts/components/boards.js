@@ -1,16 +1,17 @@
 import boardsData from "../data/boardsData.js";
 import pins from "./pins.js";
-import pinsData from "../data/pinsData";
+import pinsData from "../data/pinsData.js";
 
-const writeBoards = (boards, pins) => {
+const writeBoards = (boards) => {
     let domstring = '';
     boards.forEach(board => {
+        const boardImg = board.pins[0] ? board.pins[0].image_url : './db/default-img.jpeg'
         domstring += `
         <div class="board-card p-2" id="${board.id}">
-            <img class="card-img-top" src="./db/default-img.jpeg" alt="Card image cap">
+            <img class="card-img-top" src="${boardImg}" alt="${board.name}">
             <div class="card-body">
                 <h5 class="card-title">${board.name}</h5>
-                <p class="card-text">42 Pins</p>
+                <p class="card-text">${board.pins.length} pins</p>
             </div>
         </div>`
     });
@@ -30,13 +31,13 @@ const bindEvents = () => {
 
 const init = () => {
     boardsData.loadBoards().then((boards) => {
-        writeBoards(boards);
+        return pinsData.loadPinOnBoards(boards);
+    }).then((boardsWithPins) => {
+        writeBoards(boardsWithPins);
         bindEvents();
     }).catch((error) => {
         console.error(error);
     })
 };
-
-
 
 export default {init};
