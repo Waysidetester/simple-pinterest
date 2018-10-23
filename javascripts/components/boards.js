@@ -1,4 +1,5 @@
 import boardsData from "../data/boardsData.js";
+import pins from "./pins.js";
 
 const writeBoards = (boards) => {
     let domstring = '';
@@ -27,6 +28,7 @@ const bindEvents = () => {
        const clickedBoardId = ($(e.target).closest(".board-card").attr('id'));
        $("#boards-page").hide();
        $("#pins-page").show();
+       pins.initPins(clickedBoardId);
     })
     boardReturn();
 };
