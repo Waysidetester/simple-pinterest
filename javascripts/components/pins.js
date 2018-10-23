@@ -17,8 +17,18 @@ const writePins = (pins) => {
     $("#pins-on-board").html(domstring);
 };
 
+const boardReturn = () => {
+    $("#toBoardsBtn").on("click", (e) => {
+        $("#pins-page").hide(); 
+        $("#boards-page").show();
+    })
+};
+
 const initPins = (boardId) => {
-    pinsData.loadPins(boardId).then((pins) => writePins(pins)).catch((error) => console.log("pins screwed up",error));
+    pinsData.loadPins(boardId).then((pins) => {
+        writePins(pins);
+        boardReturn();
+    }).catch(error => console.log("pins screwed up",error));
 };
 
 export default {initPins};

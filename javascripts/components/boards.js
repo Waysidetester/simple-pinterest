@@ -1,7 +1,8 @@
 import boardsData from "../data/boardsData.js";
 import pins from "./pins.js";
+import pinsData from "../data/pinsData";
 
-const writeBoards = (boards) => {
+const writeBoards = (boards, pins) => {
     let domstring = '';
     boards.forEach(board => {
         domstring += `
@@ -16,12 +17,7 @@ const writeBoards = (boards) => {
     $("#user-boards").html(domstring);
 };
 
-const boardReturn = () => {
-    $("#toBoardsBtn").on("click", (e) => {
-        $("#boards-page").show();
-        $("#pins-page").hide(); 
-    })
-};
+
 
 const bindEvents = () => {
     $("#user-boards").on("click", ".board-card", (e) => {
@@ -30,7 +26,6 @@ const bindEvents = () => {
        $("#pins-page").show();
        pins.initPins(clickedBoardId);
     })
-    boardReturn();
 };
 
 const init = () => {
